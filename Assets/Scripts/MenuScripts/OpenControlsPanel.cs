@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OpenPanel : MonoBehaviour
+public class OpenControlsPanel : MonoBehaviour
 {
     public Button controlsButton;
     public GameObject controlsPanel;
