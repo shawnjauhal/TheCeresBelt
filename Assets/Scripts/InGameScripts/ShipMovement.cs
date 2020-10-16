@@ -8,6 +8,8 @@ using System;
 public class ShipMovement : MonoBehaviour
 {
     public CharacterController controller;
+    public float finalTime;
+    public string formattedTime;
     private GameObject ship;
     private GameObject GameOverMenu;
     private Boolean moving;
@@ -127,10 +129,11 @@ public class ShipMovement : MonoBehaviour
         }
 
         // Display current speed and time in HUD
-        TimeSpan tspan = TimeSpan.FromSeconds(Time.timeSinceLevelLoad);
-        String output = tspan.ToString(@"hh\:mm\:ss\.ff");
+        finalTime = Time.timeSinceLevelLoad;
+        TimeSpan tspan = TimeSpan.FromSeconds(finalTime);
+        formattedTime = tspan.ToString(@"hh\:mm\:ss\.ff");
         if (moving) {
-            timeDisplay.GetComponent<Text>().text = "Time:  " + output;
+            timeDisplay.GetComponent<Text>().text = "Time:  " + formattedTime;
             speedDisplay.GetComponent<Text>().text = "Speed: " + Math.Round((forwardSpeed / 10), 2) + "km/s";
         }
     }
