@@ -10,7 +10,6 @@ namespace Scoreboards
     public class ScoreboardHandler : MonoBehaviour
     {
         public GameObject scoreDisplay;
-        public GameObject scoreSelector;
         public ScoreboardSaveData scores;
         int numScores;
         EntryData newEntry;
@@ -20,10 +19,10 @@ namespace Scoreboards
         void Start()
         {
             scores = LoadScoreboard();
-            GenerateScores();
+            //GenerateScores();
             SaveScores();
-            numScores = scores.GetScores().Count;
-            UpdateUI();
+            if (scores.GetScores().Count > 0)
+                UpdateUI();
         }
 
         ScoreboardSaveData LoadScoreboard() 
@@ -48,18 +47,15 @@ namespace Scoreboards
 
         private void UpdateUI()
         {
-            int first;
-            int last;
+            int last = 100;
             int count = scores.GetScores().Count;
             if (count <= 100) {
-                scoreSelector.SetActive(false);
-                first = count - count;
-                last = count - 1;
+                last = count;
             }
             string output = "";
-            int x = 1;
-            foreach (EntryData entry in scores.GetScores()) {
-                string line = x++ + ". " + entry.GetName() + ": " + entry.GetTime() + "\n";
+            EntryData[] entries = scores.ToSubarray(0, last);
+            for (int x = 1; x <= last; x++) {
+                string line = x + ". " + entries[x-1].GetName() + ": " + entries[x-1].GetTime() + "\n";
                 output += line;
             }
             scoreDisplay.GetComponent<Text>().text = output;
@@ -67,7 +63,7 @@ namespace Scoreboards
 
         private void GenerateScores() {
             string name = "shawn";
-            for (int x = 0; x < 80; x++) {
+            for (int x = 0; x < 10; x++) {
                 float rand = UnityEngine.Random.Range(100f, 1000f);
                 TimeSpan tspan = TimeSpan.FromSeconds(rand);
                 String formattedTime = tspan.ToString(@"hh\:mm\:ss\.ff");
@@ -77,5 +73,4 @@ namespace Scoreboards
             }
         }
     }
-
 }

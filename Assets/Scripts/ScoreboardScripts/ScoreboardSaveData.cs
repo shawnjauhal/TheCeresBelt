@@ -20,6 +20,14 @@ namespace Scoreboards
             scores.Sort();
         }
 
-        
+        public int Size() {
+            return scores.Count;
+        }
+
+        public EntryData[] ToSubarray(int index, int count) {
+            EntryData[] entries = new EntryData[scores.Count];
+            scores.CopyTo(index, entries, 0, count);
+            return entries;
+        }
     }
 }
